@@ -15,24 +15,31 @@ router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);
   let movie = getMovie(id)
   let reviews = getMovieReviews(id)
+  let exists = Movie.exists({id: id})
+  let existingMovie = Movie.findByMovieDBId(id)
 
-  Promise.all([movie, reviews]).then(arrayOfAllResolvedValues => {
+  Promise.all([movie, reviews, exists, existingMovie]).then(arrayOfAllResolvedValues => {
     movie = arrayOfAllResolvedValues[0]
     reviews = arrayOfAllResolvedValues[1].results
+    exists = arrayOfAllResolvedValues[2]
+    existingMovie = arrayOfAllResolvedValues[3]
 
     movie.reviews = reviews
-    Movie.create(movie).then(res.status(200).send(movie))
+    
+    if (!exists){
+      Movie.create(movie)
+      res.status(200).send(movie)
+    } else {
+      res.status(200).send(existingMovie)
+    }
 })
 });
 
 router.get('/:id/reviews', (req, res) => {
   console.log("request made to reviews")
   const id = parseInt(req.params.id);
-  let sendReviews = {}
-  getMovieReviews(id).then(reviews => {
-  sendReviews = reviews
-  Movie.findMovieReviews(reviews.id)})
-  .then(results => results ? res.status(200).send(results) : res.status(200).send(sendReviews))
+  Movie.findMovieReviews(id)
+  .then(results => results ? res.status(200).send(results) : res.status(200).send({}))
 });
 
 
@@ -42,7 +49,6 @@ router.post('/:id/reviews', (req, res) => {
     movie.reviews.push(req.body)
     movie.save().then(res.status(200).send(movie.reviews))});
 });
-
 
 
 export default router;

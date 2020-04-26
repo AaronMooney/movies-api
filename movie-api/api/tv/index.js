@@ -2,24 +2,43 @@ import express from 'express';
 import {
   getTvShows, getTvShow, getTvShowReviews
 } from '../tmdb-api';
+import TvShow from './tvShowModel'
 import wrap from 'express-async-wrapper';
 
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log("a")
   getTvShows().then(tvShows => res.status(200).send(tvShows));
 });
 
 router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);
-  getTvShow(id).then(tvShow => res.status(200).send(tvShow));
+  let tvShow = getTvShow(id)
+  let reviews = getTvShowReviews(id)
+  let exists = TvShow.exists({id: id})
+  let existingTvShow = TvShow.findByTvShowDBId(id)
+
+  Promise.all([tvShow, reviews, exists, existingTvShow]).then(arrayOfAllResolvedValues => {
+    tvShow = arrayOfAllResolvedValues[0]
+    reviews = arrayOfAllResolvedValues[1].results
+    exists = arrayOfAllResolvedValues[2]
+    existingTvShow = arrayOfAllResolvedValues[3]
+
+    tvShow.reviews = reviews
+
+    if (!exists){
+      TvShow.create(tvShow)
+      res.status(200).send(tvShow)
+    } else {
+      res.status(200).send(existingTvShow)
+    }
+})
 });
 
-router.get('/:id/reviews', (req, res, next) => {
+router.get('/:id/reviews', (req, res) => {
   const id = parseInt(req.params.id);
   TvShow.findTvShowReviews(id)
-  .then(results => res.status(200).send(results))
+  .then(results => results ? res.status(200).send(results) : res.status(200).send({}))
 });
 
 router.post('/:id/reviews', (req, res) => {

@@ -1,5 +1,6 @@
 import userModel from '../api/users/userModel'
 import movieModel from '../api/movies/movieModel'
+import tvShowModel from '../api/tv/tvShowModel'
 
 const users = [
   {
@@ -27,6 +28,7 @@ export async function removeFavorites() {
   console.log('remove favorites');
   try {
     await movieModel.deleteMany();
+    await tvShowModel.deleteMany();
   } catch (err) {
     console.error(`failed to Load user Data: ${err}`);
   }

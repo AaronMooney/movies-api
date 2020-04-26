@@ -8,6 +8,16 @@ const MovieReviewSchema = {
   content : {type: String}
 }
 
+const GenreSchema = new Schema({
+  name: {type: String}
+});
+
+const ProductionCompanySchema = new Schema({
+  logo_path: {type: String},
+  name: {type: String},
+  origin_country: {type: String}
+})
+
 const MovieSchema = new Schema({
     adult: { type: Boolean},
     id: { type: Number, required: true, unique: true },
@@ -34,13 +44,15 @@ spoken_languages : [ {
   name : { type: String}
 } ],
 status : { type: String},
-tagline : { type: String}
+tagline : { type: String},
+genres: [GenreSchema],
+production_companies: [ProductionCompanySchema]
 
   });
 
   MovieSchema.statics.findByMovieDBId = function (id) {
     console.log('findByMovieDBId')
-    return this.findOne({ id: id}).then(a => a ? a : getMovieAndReviews(id).then(movie => this.create(movie) ));
+    return this.findOne({ id: id});
   };
 
   MovieSchema.statics.findMovieReviews = function(id) {

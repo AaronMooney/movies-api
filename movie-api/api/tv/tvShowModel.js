@@ -15,15 +15,14 @@ const NetworkSchema = new Schema({
 })
 
 const ProductionCompanySchema = new Schema({
-  id: {type: Number},
   logo_path: {type: String},
   name: {type: String},
   origin_country: {type: String}
 })
 
 const TvShowReviewSchema = {
-  userName : { type: String},
-  review : {type: String}
+  author : { type: String},
+  content : {type: String}
 }
 
 const TvShowSchema = new Schema({
@@ -46,18 +45,19 @@ const TvShowSchema = new Schema({
     networks: [NetworkSchema],
     number_of_episodes: {type: Number},
     number_of_seasons: {type: Number},
-    production_companies: [{ProductionCompanySchema}],
+    production_companies: [ProductionCompanySchema],
     reviews: [TvShowReviewSchema]
 
   });
 
-  TvShowSchema.statics.findByTvShowDBId = id => {
-    return this.findOne({ id: id});
-  };
+TvShowSchema.statics.findByTvShowDBId = function (id) {
+  console.log('findByTvShowDBId')
+  return this.findOne({ id: id});
+};
 
-  MovieSchema.statics.findTvShowReviews = function(id) {
-    return this.findByTvShowDBId(id)
-    .then(tvShow => {return {id:tvShow.id, results: tvShow.reviews}})
+TvShowSchema.statics.findTvShowReviews = function(id) {
+  console.log("findTvShowReviews")
+  return this.findByTvShowDBId(id).then(tvShow => {return tvShow ? {id:tvShow.id, results: tvShow.reviews} : null})
 };
 
 
