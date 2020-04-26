@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import Movie from '../movies/movieModel'
 
 const Schema = mongoose.Schema;
 
@@ -19,7 +18,7 @@ const PersonSchema = new Schema({
   });
 
   PersonSchema.statics.findByPersonDBId = function (id) {
-    console.log('findByPersonDBId')
+    console.log('findByPersonDBId');
     return this.findOne({ id: id});
   };
 

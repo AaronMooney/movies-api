@@ -12,18 +12,18 @@ const NetworkSchema = new Schema({
   id: {type: Number},
   logo_path: {type: String},
   origin_country: {type: String}
-})
+});
 
 const ProductionCompanySchema = new Schema({
   logo_path: {type: String},
   name: {type: String},
   origin_country: {type: String}
-})
+});
 
 const TvShowReviewSchema = {
   author : { type: String},
   content : {type: String}
-}
+};
 
 const TvShowSchema = new Schema({
     id: { type: Number, required: true, unique: true },
@@ -51,13 +51,13 @@ const TvShowSchema = new Schema({
   });
 
 TvShowSchema.statics.findByTvShowDBId = function (id) {
-  console.log('findByTvShowDBId')
+  console.log('findByTvShowDBId');
   return this.findOne({ id: id});
 };
 
 TvShowSchema.statics.findTvShowReviews = function(id) {
-  console.log("findTvShowReviews")
-  return this.findByTvShowDBId(id).then(tvShow => {return tvShow ? {id:tvShow.id, results: tvShow.reviews} : null})
+  console.log("findTvShowReviews");
+  return this.findByTvShowDBId(id).then(tvShow => {return tvShow ? {id:tvShow.id, results: tvShow.reviews} : null;});
 };
 
 

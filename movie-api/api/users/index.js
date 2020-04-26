@@ -1,30 +1,30 @@
-import express from 'express'
-import User from './userModel'
-import Movie from './../movies/movieModel'
-import TvShow from './../tv/tvShowModel'
+import express from 'express';
+import User from './userModel';
+import Movie from './../movies/movieModel';
+import TvShow from './../tv/tvShowModel';
 import jwt from 'jsonwebtoken';
 
 const router = express.Router() // eslint-disable-line
 
 // Get all users
 router.get('/', (req, res, next) => {
-  User.find().then(users =>  res.status(200).json(users)).catch(next)
-})
+  User.find().then(users =>  res.status(200).json(users)).catch(next);
+});
 
 // Register/login a user
 router.post('/', (req, res, next) => {
-  console.log(req.body)
+  console.log(req.body);
     if (!req.body.username || !req.body.password) {
       return res.status(401).json({
         success: false,
         msg: 'Please pass username and password.',
       });
-    };
+    }
     if (req.query.action === 'register') {
       User.create({
         username: req.body.username,
         password: req.body.password,
-      }).then(user => res.status(201).json({
+      }).then(() => res.status(201).json({
         code: 201,
         msg: 'Successful created new user.',
       })).catch(next);
@@ -53,30 +53,30 @@ router.post('/', (req, res, next) => {
 // Update a user
 router.put('/:userName',  (req, res, next) => {
   let userName = req.params.userName;
-  if (req.body._id) delete req.body._id
+  if (req.body._id) delete req.body._id;
   User.findByUserName(userName)
   .then(user => {
     user.password = req.body.password;
     user.movieFavorites = req.body.movieFavorites;
     user.tvShowFavorites = req.body.tvShowFavorites;
-    return user.save().then(user => res.status(200).send(user))
-  }).catch(next)
-})
+    return user.save().then(user => res.status(200).send(user));
+  }).catch(next);
+});
 
 router.get('/:userName/favorites/movies', (req, res, next) => {
   const userName = req.params.userName;
-  console.log("getting fav movies for " + userName )
+  console.log("getting fav movies for " + userName );
   User.findByUserName(userName).populate('movieFavorites').then(
       user => res.status(201).send(user.movieFavorites)
-  ).catch(next)
-})
+  ).catch(next);
+});
 
 router.get('/:userName/favorites/tv', (req, res, next) => {
   const userName = req.params.userName;
   User.findByUserName(userName).populate('tvShowFavorites').then(
       user => res.status(201).send(user.tvShowFavorites)
-  ).catch(next)
-})
+  ).catch(next);
+});
 
 router.put('/:userName/favorites/movies', (req, res, next) => {
   const newMovie = req.body;
@@ -91,9 +91,9 @@ router.put('/:userName/favorites/movies', (req, res, next) => {
       });
     }).catch(next);
   } else {
-    res.status(401).send("Unable to add favorite - data incomplete")
+    res.status(401).send("Unable to add favorite - data incomplete");
   }
-})
+});
 
 router.put('/:userName/favorites/tv', (req, res, next) => {
   const newTvShow = req.body;
@@ -108,9 +108,9 @@ router.put('/:userName/favorites/tv', (req, res, next) => {
       });
     }).catch(next);
   } else {
-    res.status(401).send("Unable to add favorite - data incomplete")
+    res.status(401).send("Unable to add favorite - data incomplete");
   }
-})
+});
 
 router.delete('/:userName/favorites/movies/:id', (req, res, next) => {
   const userName = req.params.userName;
@@ -122,7 +122,7 @@ router.delete('/:userName/favorites/movies/:id', (req, res, next) => {
       user.save().then(user => res.status(200).send(user));
     }).catch(next);
   }).catch(next);
-})
+});
 
 router.delete('/:userName/favorites/tv/:id', (req, res, next) => {
   const userName = req.params.userName;
@@ -134,7 +134,7 @@ router.delete('/:userName/favorites/tv/:id', (req, res, next) => {
       user.save().then(user => res.status(200).send(user));
     }).catch(next);
   }).catch(next);
-})
+});
 
 
-export default router
+export default router;

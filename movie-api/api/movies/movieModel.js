@@ -1,12 +1,11 @@
 import mongoose from 'mongoose';
-import {getMovie, getMovieReviews} from '../tmdb-api';
 
 const Schema = mongoose.Schema;
 
 const MovieReviewSchema = {
   author : { type: String},
   content : {type: String}
-}
+};
 
 const GenreSchema = new Schema({
   name: {type: String}
@@ -16,7 +15,7 @@ const ProductionCompanySchema = new Schema({
   logo_path: {type: String},
   name: {type: String},
   origin_country: {type: String}
-})
+});
 
 const MovieSchema = new Schema({
     adult: { type: Boolean},
@@ -51,13 +50,13 @@ production_companies: [ProductionCompanySchema]
   });
 
   MovieSchema.statics.findByMovieDBId = function (id) {
-    console.log('findByMovieDBId')
+    console.log('findByMovieDBId');
     return this.findOne({ id: id});
   };
 
   MovieSchema.statics.findMovieReviews = function(id) {
-    console.log("findMovieReviews")
-    return this.findByMovieDBId(id).then(movie => {return movie ? {id:movie.id, results: movie.reviews} : null})
+    console.log("findMovieReviews");
+    return this.findByMovieDBId(id).then(movie => {return movie ? {id:movie.id, results: movie.reviews} : null;});
 };
 
 
