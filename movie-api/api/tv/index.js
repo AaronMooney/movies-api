@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getTvShows, getTvShow, getTvShowReviews
+  getTvShows, getTvShow, getTvShowReviews, getTrendingTvShows
 } from '../tmdb-api';
 import TvShow from './tvShowModel'
 import wrap from 'express-async-wrapper';
@@ -10,6 +10,10 @@ const router = express.Router();
 router.get('/', (req, res) => {
   getTvShows().then(tvShows => res.status(200).send(tvShows));
 });
+
+router.get('/trending', (req, res) => {
+  getTrendingTvShows().then(tvShows => res.status(200).send(tvShows));
+})
 
 router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);

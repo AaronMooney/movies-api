@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-  getMovies, getMovie, getMovieReviews
+  getMovies, getMovie, getMovieReviews, getTrendingMovies, getUpcomingMovies
 } from '../tmdb-api';
 import Movie from './movieModel'
 import wrap from 'express-async-wrapper';
@@ -10,6 +10,14 @@ const router = express.Router();
 router.get('/', (req, res) => {
   getMovies().then(movies => res.status(200).send(movies));
 });
+
+router.get('/trending', (req, res) => {
+  getTrendingMovies().then(movies => res.status(200).send(movies));
+})
+
+router.get('/upcoming', (req, res) => {
+  getUpcomingMovies().then(movies => res.status(200).send(movies));
+})
 
 router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);

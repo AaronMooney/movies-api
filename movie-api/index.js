@@ -12,6 +12,7 @@ import {loadUsers, removeFavorites} from './seedData'
 import session from 'express-session'
 import passport from './authenticate'
 import cors from 'cors'
+import personRouter from './api/person'
 
 dotenv.config()
 
@@ -48,6 +49,7 @@ app.use(express.static('public'));
 
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
 app.use('/api/tvShows', passport.authenticate('jwt', {session: false}), tvShowsRouter);
+app.use('/api/person', personRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
