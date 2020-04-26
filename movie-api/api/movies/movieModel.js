@@ -1,10 +1,11 @@
 import mongoose from 'mongoose';
+import {getMovie, getMovieReviews} from '../tmdb-api';
 
 const Schema = mongoose.Schema;
 
 const MovieReviewSchema = {
-  userName : { type: String},
-  review : {type: String}
+  author : { type: String},
+  content : {type: String}
 }
 
 const MovieSchema = new Schema({
@@ -37,13 +38,14 @@ tagline : { type: String}
 
   });
 
-  MovieSchema.statics.findByMovieDBId = id => {
-    return this.findOne({ id: id});
+  MovieSchema.statics.findByMovieDBId = function (id) {
+    console.log('findByMovieDBId')
+    return this.findOne({ id: id}).then(a => a ? a : getMovieAndReviews(id).then(movie => this.create(movie) ));
   };
 
   MovieSchema.statics.findMovieReviews = function(id) {
-    return this.findByMovieDBId(id)
-    .then(movie => {return {id:movie.id, results: movie.reviews}})
+    console.log("findMovieReviews")
+    return this.findByMovieDBId(id).then(movie => {return movie ? {id:movie.id, results: movie.reviews} : null})
 };
 
 

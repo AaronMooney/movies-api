@@ -2,6 +2,7 @@ import dotenv from 'dotenv'
 import express from 'express'
 import moviesRouter from './api/movies'
 import genresRouter from './api/genres'
+import tvShowsRouter from './api/tv'
 import bodyParser from 'body-parser'
 import swaggerUi from 'swagger-ui-express'
 import YAML from 'yamljs'
@@ -9,7 +10,8 @@ import './db'
 import usersRouter from './api/users'
 import {loadUsers, removeFavorites} from './seedData'
 import session from 'express-session'
-import passport from './authenticate';
+import passport from './authenticate'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -28,6 +30,7 @@ if (process.env.seedDb) {
 
 // initialise passport​
 app.use(passport.initialize());
+app.use(cors())
 
 //session middleware
 app.use(session({
@@ -44,6 +47,7 @@ app.use(bodyParser.urlencoded());
 app.use(express.static('public'));
 
 app.use('/api/movies', passport.authenticate('jwt', {session: false}), moviesRouter);
+app.use('/api/tvShows', tvShowsRouter);
 app.use('/api/genres', genresRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));

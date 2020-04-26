@@ -2,6 +2,7 @@ import express from 'express';
 import {
   getMovies, getMovie, getMovieReviews
 } from '../tmdb-api';
+import Movie from './movieModel'
 import wrap from 'express-async-wrapper';
 
 const router = express.Router();
@@ -12,14 +13,28 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res, next) => {
   const id = parseInt(req.params.id);
-  getMovie(id).then(movie => res.status(200).send(movie));
+  let movie = getMovie(id)
+  let reviews = getMovieReviews(id)
+
+  Promise.all([movie, reviews]).then(arrayOfAllResolvedValues => {
+    movie = arrayOfAllResolvedValues[0]
+    reviews = arrayOfAllResolvedValues[1].results
+
+    movie.reviews = reviews
+    Movie.create(movie).then(res.status(200).send(movie))
+})
 });
 
-router.get('/:id/reviews', (req, res, next) => {
+router.get('/:id/reviews', (req, res) => {
+  console.log("request made to reviews")
   const id = parseInt(req.params.id);
-  Movie.findMovieReviews(id)
-  .then(results => res.status(200).send(results))
+  let sendReviews = {}
+  getMovieReviews(id).then(reviews => {
+  sendReviews = reviews
+  Movie.findMovieReviews(reviews.id)})
+  .then(results => results ? res.status(200).send(results) : res.status(200).send(sendReviews))
 });
+
 
 router.post('/:id/reviews', (req, res) => {
   const id = parseInt(req.params.id);
