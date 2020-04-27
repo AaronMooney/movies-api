@@ -63,6 +63,19 @@ router.put('/:userName',  (req, res, next) => {
   }).catch(next);
 });
 
+// Update a user's password
+router.put('/:userName/password',  (req, res, next) => {
+  let userName = req.params.userName;
+  console.log(userName)
+  console.log(req.body.password)
+  if (req.body._id) delete req.body._id;
+  User.findByUserName(userName)
+  .then(user => {
+    user.password = req.body.password;
+    return user.save().then(user => res.status(200).send(user));
+  }).catch(next);
+});
+
 router.get('/:userName/favorites/movies', (req, res, next) => {
   const userName = req.params.userName;
   console.log("getting fav movies for " + userName );
