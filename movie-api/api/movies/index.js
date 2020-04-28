@@ -45,8 +45,9 @@ router.get('/:id', (req, res) => {
 router.get('/:id/reviews', (req, res) => {
   console.log("request made to reviews");
   const id = parseInt(req.params.id);
+  console.log(id)
   Movie.findMovieReviews(id)
-  .then(results => results ? res.status(200).send(results) : res.status(200).send({}));
+  .then(results => {console.log(results);  results ? res.status(200).send(results) : res.status(200).send({})});
 });
 
 

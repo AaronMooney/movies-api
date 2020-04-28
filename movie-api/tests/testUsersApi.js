@@ -104,7 +104,7 @@ describe('Users API test', function () {
             .then((res) => {
               res.should.have.property('status').equal(200);
               res.body.success.should.be.true;
-              res.body.token.should.exist; 
+              res.body.token.should.exist;
               done();
             })
           })
