@@ -1,0 +1,234 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2020-04-28T16:23:49.695Z",
+    "end": "2020-04-28T16:23:51.113Z",
+    "duration": 1418,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "60b3bd95-8395-452b-86af-59775bf82dd6",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "42920906-4604-4ca5-b56f-637bd4a5ea9d",
+          "title": "Movies API test",
+          "fullFile": "/Users/admin/College/assignments/assignment2/movie-api/tests/testMoviesApi.js",
+          "file": "/tests/testMoviesApi.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook",
+              "fullTitle": "Movies API test \"before all\" hook",
+              "timedOut": false,
+              "duration": 524,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "testUser.username = 'user1';\ntestUser.password = 'test1';\n_userModel2.default.create(testUser).then(function (result) {\n  return done();\n}).catch(function (err) {\n  return done(err);\n});",
+              "err": {},
+              "uuid": "896205a5-c243-4ef5-8e05-bbfcdf202b76",
+              "parentUUID": "42920906-4604-4ca5-b56f-637bd4a5ea9d",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should get a list of Movies",
+              "fullTitle": "Movies API test should get a list of Movies",
+              "timedOut": false,
+              "duration": 350,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var token = null;\n(0, _supertest2.default)(_index.app).post('/api/users').send(testUser).expect(200).then(function (res) {\n  console.log(res.body);\n  // HTTP status should be 200\n  res.should.have.property('status').equal(200);\n  res.body.should.have.property('success').equal(true);\n  token = res.body.token;\n  (0, _supertest2.default)(_index.app).get('/api/movies').set('Authorization', token).then(function (res) {\n    // HTTP status should be 200\n    console.log(res.body);\n    res.should.have.property('status').equal(200);\n    done();\n  });\n}).catch(function (err) {\n  return done(err);\n});",
+              "err": {},
+              "uuid": "39169ce7-3be0-4455-8afe-b9a1782b6be0",
+              "parentUUID": "42920906-4604-4ca5-b56f-637bd4a5ea9d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should prevent access to movies without valid token",
+              "fullTitle": "Movies API test should prevent access to movies without valid token",
+              "timedOut": false,
+              "duration": 1,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step(\"next\", value); }, function (err) { step(\"throw\", err); }); } } return step(\"next\"); });",
+              "err": {},
+              "uuid": "a21ff273-eed3-40bb-a7e3-a2a910676de5",
+              "parentUUID": "42920906-4604-4ca5-b56f-637bd4a5ea9d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "39169ce7-3be0-4455-8afe-b9a1782b6be0",
+            "a21ff273-eed3-40bb-a7e3-a2a910676de5"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 351,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 120000
+        },
+        {
+          "uuid": "fd782301-607c-4f2b-ac77-5d771b81f002",
+          "title": "Users API test",
+          "fullFile": "/Users/admin/College/assignments/assignment2/movie-api/tests/testUsersApi.js",
+          "file": "/tests/testUsersApi.js",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook",
+              "fullTitle": "Users API test \"before all\" hook",
+              "timedOut": false,
+              "duration": 176,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "testUser.username = 'user2';\ntestUser.password = 'test2';\ninvalidUser.username = 'chancer1';\ninvalidUser.password = 'bad1';\n_userModel2.default.create(testUser).then(function (result) {\n    return done();\n}).catch(function (err) {\n    return done(err);\n});",
+              "err": {},
+              "uuid": "3856a381-8cb5-49dc-873f-5546a60403be",
+              "parentUUID": "fd782301-607c-4f2b-ac77-5d771b81f002",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should register a user",
+              "fullTitle": "Users API test should register a user",
+              "timedOut": false,
+              "duration": 176,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "var newUser = {\n            username: \"frankx\",\n            password: \"apassword\"\n        };\n        (0, _supertest2.default)(_index.app).post('/api/users').send(newUser).query({\n            action: 'register'\n        }).expect('Content-type', /json/).expect(201) // This is the HTTP response\n        .then(function (res) {\n            // HTTP status should be 200\n            res.should.have.property('status').equal(201);\n            done();\n        }).catch(function (err) {\n            return done(err);\n        });",
+              "err": {},
+              "uuid": "79310fc8-f8c2-449a-8d80-d6b1a4b51cd0",
+              "parentUUID": "fd782301-607c-4f2b-ac77-5d771b81f002",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should return a user token for valid user",
+              "fullTitle": "Users API test should return a user token for valid user",
+              "timedOut": false,
+              "duration": 177,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "(0, _supertest2.default)(_index.app).post('/api/users').send(testUser).expect('Content-type', /json/).expect(200) // This is the HTTP response\n.then(function (res) {\n    // HTTP status should be 200\n    res.should.have.property('status').equal(200);\n    res.body.success.should.be.true;\n    res.body.token.should.exist;\n    done();\n}).catch(function (err) {\n    return done(err);\n});",
+              "err": {},
+              "uuid": "60bacbde-a17d-4e72-8e1d-186240405e08",
+              "parentUUID": "fd782301-607c-4f2b-ac77-5d771b81f002",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should not return a token for invalid user",
+              "fullTitle": "Users API test should not return a token for invalid user",
+              "timedOut": false,
+              "duration": 5,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "(0, _supertest2.default)(_index.app).post('/api/users').send(invalidUser).expect('Content-type', /json/).expect(401) // This is the HTTP response\n        .then(function (res) {\n            // HTTP status should be 401\n            res.should.have.property('status').equal(401);\n            _should2.default.not.exist(res.body.token);\n            done();\n        }).catch(function (err) {\n            return done(err);\n        });",
+              "err": {},
+              "uuid": "23468241-c9e9-488d-b013-168495330633",
+              "parentUUID": "fd782301-607c-4f2b-ac77-5d771b81f002",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "79310fc8-f8c2-449a-8d80-d6b1a4b51cd0",
+            "60bacbde-a17d-4e72-8e1d-186240405e08",
+            "23468241-c9e9-488d-b013-168495330633"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 358,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 120000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.1.2"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "6.1.1"
+    },
+    "marge": {
+      "options": null,
+      "version": "5.1.0"
+    }
+  }
+}
