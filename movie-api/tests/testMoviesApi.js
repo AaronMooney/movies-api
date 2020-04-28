@@ -18,7 +18,7 @@ describe('Movies API test', function () {
   before((done) => {
     testUser.username = 'user1';
     testUser.password = 'test1';
-    userModel.create(testUser).then(result => done()).catch(err => done(err))
+    done();
   });
 
   it('should get a list of Movies', (done) => {

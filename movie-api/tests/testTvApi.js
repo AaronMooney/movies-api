@@ -19,7 +19,6 @@ describe('TvShows API test', function () {
     testUser.username = 'user1';
     testUser.password = 'test1';
     done();
-    // userModel.create(testUser).then(result => done()).catch(err => done(err))
   });
 
   it('should get a list of Tv Shows', (done) => {
