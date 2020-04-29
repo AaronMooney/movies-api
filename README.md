@@ -43,7 +43,7 @@ In a terminal, run these commands in the project root directory.
 ```npm start```
 
 ### Stopping the API
-In order to stop the API, you can hit ```Ctrl + C```
+In order to stop the API, you can press ```Ctrl + C```
 
 ### Running unit tests
 In the root directory of the project, you can run this command to run the unit tests
@@ -62,7 +62,7 @@ Give an overview of your web API design. If you don't have a Swagger description
 | ---- |:--:| ---:|---:|------:|
 | /api/movies/ | Gets a list of movies| N/A | N/A | N/A |
 | /api/movies/trending | Gets a list of trending movies this week| N/A | N/A | N/A |
-| /api/movies/upcoming | Gets a list of upcoming movies this week| N/A | N/A | N/A |
+| /api/movies/upcoming | Gets a list of upcoming movies | N/A | N/A | N/A |
 | /api/movies/{movieId} | Get a movie| N/A | N/A | N/A |
 | /api/movies/{movieId}/reviews | Get a movie's reviews| Post a new movie review | N/A | N/A |
 | /api/tvShows/ | Gets a list of tv shows| N/A | N/A | N/A |
