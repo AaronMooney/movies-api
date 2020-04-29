@@ -66,8 +66,6 @@ router.put('/:userName',  (req, res, next) => {
 // Update a user's password
 router.put('/:userName/password',  (req, res, next) => {
   let userName = req.params.userName;
-  console.log(userName)
-  console.log(req.body.password)
   if (req.body._id) delete req.body._id;
   User.findByUserName(userName)
   .then(user => {
