@@ -3,9 +3,19 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const MovieReviewSchema = {
-  userName : { type: String},
-  review : {type: String}
-}
+  author : { type: String},
+  content : {type: String}
+};
+
+const GenreSchema = new Schema({
+  name: {type: String}
+});
+
+const ProductionCompanySchema = new Schema({
+  logo_path: {type: String},
+  name: {type: String},
+  origin_country: {type: String}
+});
 
 const MovieSchema = new Schema({
     adult: { type: Boolean},
@@ -33,17 +43,20 @@ spoken_languages : [ {
   name : { type: String}
 } ],
 status : { type: String},
-tagline : { type: String}
+tagline : { type: String},
+genres: [GenreSchema],
+production_companies: [ProductionCompanySchema]
 
   });
 
-  MovieSchema.statics.findByMovieDBId = id => {
+  MovieSchema.statics.findByMovieDBId = function (id) {
+    console.log('findByMovieDBId');
     return this.findOne({ id: id});
   };
 
   MovieSchema.statics.findMovieReviews = function(id) {
-    return this.findByMovieDBId(id)
-    .then(movie => {return {id:movie.id, results: movie.reviews}})
+    console.log("findMovieReviews");
+    return this.findByMovieDBId(id).then(movie => {return movie ? {id:movie.id, results: movie.reviews} : null;});
 };
 
 
